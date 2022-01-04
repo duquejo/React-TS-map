@@ -9,7 +9,8 @@ import { PlacesContext } from '../';
 import { directionsApi } from '../../apis';
 import { mapReducer } from './mapReducer';
 import { useReducer, useContext, useEffect, useRef } from 'react';
-import { constants, setSourceData, setLayerData } from '../../helpers';
+import { constantsName, setSourceData, setLayerData, setActiveMarkerConfig } from '../../helpers';
+import { Feature } from '../../interfaces/places';
 
 export interface IMapState {
     isMapReady: boolean;
@@ -30,7 +31,7 @@ interface IMapProviderProps {
 export const MapProvider = ({ children }: IMapProviderProps) => {
 
     const [state, dispatch] = useReducer( mapReducer, INITIAL_STATE );
-    const { places } = useContext(PlacesContext);
+    const { places, searchPlaceByCoords, userLocation } = useContext(PlacesContext);
 
     /**
      * useEffect array-dependencies bugfix
@@ -38,22 +39,28 @@ export const MapProvider = ({ children }: IMapProviderProps) => {
     const markersRef = useRef<()=>Marker[]>();
 
     const setupMarkers = (): Marker[] => {
-        state.markers.forEach( marker => marker.remove() );
+
+        // Definitions
         const newMarkers: Marker[] = [];
+
+        state.markers.forEach( marker => marker.remove() );
         for (const place of places) {
+
             const [ lng, lat ] = place.center;
+
             const popup = new Popup()
             .setHTML(`
                 <h6>${ place.text }</h6>
                 <p>${ place.place_name }</p>
             `);
+
             const newMarker = new Marker()
             .setPopup( popup )
             .setLngLat( [ lng, lat ])
             .addTo( state.map! );
             newMarkers.push( newMarker );
         }
-        return newMarkers;     
+        return newMarkers;
     };
     markersRef.current = setupMarkers;
 
@@ -67,10 +74,17 @@ export const MapProvider = ({ children }: IMapProviderProps) => {
         }
     }, [ places ]);
 
-    const setMap = ( map: Map ) => {
+    const setMap = async ( map: Map ) => {
+
+        let popUpContent = `<h4>I'm here!</h4><p>Somehere around the world!</p>`;
+
+        const myLocation: Feature[] = await searchPlaceByCoords( userLocation );
+        if( myLocation.length > 0 ) {
+            popUpContent = `<h4>Hello there!</h4><p><strong>My current location: </strong>${ myLocation[0].place_name }.</p>`;
+        }
 
         const myLocationPopup = new Popup()
-        .setHTML(`<h4>I'm here!</h4><p>Somehere around the world!</p>`)
+        .setHTML( popUpContent );
 
         new Marker({ color: '#ff4136' })
         .setLngLat( map.getCenter() )
@@ -87,9 +101,9 @@ export const MapProvider = ({ children }: IMapProviderProps) => {
      * Clear Polylines
      */
     const clearPolylines = () => {
-        if( state.map?.getLayer( constants.SOURCE_DATA_ID ) ) {
-            state.map.removeLayer( constants.SOURCE_DATA_ID );
-            state.map.removeSource( constants.SOURCE_DATA_ID );
+        if( state.map?.getLayer( constantsName.SOURCE_DATA_ID ) ) {
+            state.map.removeLayer( constantsName.SOURCE_DATA_ID );
+            state.map.removeSource( constantsName.SOURCE_DATA_ID );
         }
     }
 
@@ -99,20 +113,13 @@ export const MapProvider = ({ children }: IMapProviderProps) => {
      * @param end end coordinate points
      */
     const getRouteBetweenPoints = async ( start: [ number, number ], end: [ number, number ] ) => {
-        
         /**
          * Navigation API Call
          */
         const response = await directionsApi.get<IDirectionsResponse>(`/${ start.join(',') };${ end.join(',') }`);
         
-        const { distance, duration, geometry } = response.data.routes[0];
+        const { geometry } = response.data.routes[0];
         const { coordinates } = geometry;
-
-        let kms = distance / 1000;
-            kms = Math.round( kms * 100 );
-            kms /= 100; 
-
-        const minutes = Math.floor( duration / 60 );
 
         const bounds = new LngLatBounds( start, start );
 
@@ -134,8 +141,14 @@ export const MapProvider = ({ children }: IMapProviderProps) => {
          */
          clearPolylines();
 
-        state.map?.addSource( constants.SOURCE_DATA_ID, sourceData );
-        state.map?.addLayer( setLayerData( constants.SOURCE_DATA_ID ) );
+        state.map?.addSource( constantsName.SOURCE_DATA_ID, sourceData );
+        state.map?.addLayer( setLayerData( constantsName.SOURCE_DATA_ID ) );
+
+        /**
+         * Filter destination point
+         * @see setMarkerColor helper
+         */
+        setActiveMarkerConfig( state.markers, end );
     };
 
     return (

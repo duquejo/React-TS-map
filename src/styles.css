@@ -1,6 +1,9 @@
-input,
-select {
-  outline: none !important;
+textarea:focus,
+input:focus,
+input[type]:focus {
+  border-color: rgb(182 182 182 / 80%);
+  box-shadow: 0 1px 1px rgb(175 175 175 / 8%) inset, 0 0 8px rgb(53 53 53 / 60%);
+  outline: 0 none;
 }
 
 .loading-map {
@@ -14,7 +17,6 @@ select {
 }
 
 .search-container {
-  backgroud-color: #fff;
   border-radius: 5px;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
   left: 20px;
@@ -28,7 +30,12 @@ select {
   cursor: pointer;
 }
 
-.list-group-item.active {
+.search-container-results {
+  overflow-y: auto;
+  height: 90vh;
+}
+
+.search-container-results .list-group-item.active {
   background-color: #212529;
   border-color: #212529;
 }
@@ -53,4 +60,9 @@ select {
   position: fixed;
   right: 0px;
   width: 90px;
+}
+
+.mapboxgl-popup-content h4 {
+  font-weight: bold;
+  font-size: 20px;
 }

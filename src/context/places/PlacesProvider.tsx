@@ -10,13 +10,15 @@ export interface IPlacesState {
     userLocation?: [ number, number ];
     isLoadingPlaces: boolean;
     places: Feature[];
+    activePlace?: Feature;
 }
 
 const INITIAL_STATE: IPlacesState = {
     isLoading: true,
     userLocation: undefined,
     isLoadingPlaces: false,
-    places: []
+    places: [],
+    activePlace: undefined
 };
 
 interface PlacesProviderProps {
@@ -34,6 +36,18 @@ export const PlacesProvider = ({ children }: PlacesProviderProps ) => {
             payload: lngLat
         }));
     }, []);
+
+    const searchPlaceByCoords = async ( coords?: [number, number] ): Promise<Feature[]> => {
+        if( ! coords ) {
+            return [];
+        }
+        const response = await searchApi.get<IPlacesResponse>( `/${ coords }.json`, {
+            params: {
+                limit: 1
+            }
+        } );
+        return response.data.features;
+    }
 
     const searchPlacesByTerm = async ( query: string ): Promise<Feature[]> => {
         if( query.length === 0 ) {
@@ -59,13 +73,22 @@ export const PlacesProvider = ({ children }: PlacesProviderProps ) => {
         dispatch({ type: 'setPlaces', payload: response.data.features });
         return response.data.features;
     };
+
+    const setActivePlace = ( place: Feature ) => {
+        dispatch({
+            type: 'setActivePlace',
+            payload: place
+        });
+    };
     
     return (
         <PlacesContext.Provider value={{
             ...state,
 
             // Methods
-            searchPlacesByTerm
+            searchPlacesByTerm,
+            searchPlaceByCoords,
+            setActivePlace
         }}>
             { children }
         </PlacesContext.Provider>
