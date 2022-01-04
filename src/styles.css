@@ -1,0 +1,56 @@
+input,
+select {
+  outline: none !important;
+}
+
+.loading-map {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  height: 100vh;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100vw;
+}
+
+.search-container {
+  backgroud-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  left: 20px;
+  position: fixed;
+  top: 20px;
+  width: 250px;
+  z-index: 999;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.list-group-item.active {
+  background-color: #212529;
+  border-color: #212529;
+}
+
+.map-container {
+  height: 100vh;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100vw;
+}
+
+.my-location-btn {
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  zindex: 99;
+}
+
+.react-logo {
+  bottom: 20px;
+  position: fixed;
+  right: 0px;
+  width: 90px;
+}

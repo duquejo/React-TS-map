@@ -1,17 +1,27 @@
+/* eslint import/no-webpack-loader-syntax: off */
+
+import './styles.css';
+import 'mapbox-gl/dist/mapbox-gl.css';
+import { MapsApp } from './MapsApp';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+
+// @ts-ignore
+import mapboxgl from '!mapbox-gl';
+
+/**
+ * Mapbox Access Token
+ */
+mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_API;
+
+if( ! navigator.geolocation ) {
+  alert('Your browser cannot access to Geolocation, please activate.');
+  throw new Error('Your browser cannot access to Geolocation, please activate.')
+}
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <MapsApp />
   </React.StrictMode>,
   document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
