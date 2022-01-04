@@ -1,7 +1,9 @@
 /* eslint import/no-webpack-loader-syntax: off */
 
 import './styles.css';
+import 'animate.css';
 import 'mapbox-gl/dist/mapbox-gl.css';
+
 import { MapsApp } from './MapsApp';
 import React from 'react';
 import ReactDOM from 'react-dom';

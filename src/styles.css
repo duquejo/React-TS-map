@@ -1,3 +1,8 @@
+html,
+body {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
 textarea:focus,
 input:focus,
 input[type]:focus {
@@ -7,7 +12,6 @@ input[type]:focus {
 }
 
 .loading-map {
-  background-color: rgba(0, 0, 0, 0.8);
   color: #fff;
   height: 100vh;
   position: fixed;
@@ -18,12 +22,15 @@ input[type]:focus {
 
 .search-container {
   border-radius: 5px;
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
   left: 20px;
   position: fixed;
   top: 20px;
   width: 250px;
   z-index: 999;
+}
+.search-container input[type="text"] {
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  font-style: italic;
 }
 
 .pointer {
@@ -31,6 +38,7 @@ input[type]:focus {
 }
 
 .search-container-results {
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
   overflow-y: auto;
   height: 90vh;
 }
@@ -52,7 +60,7 @@ input[type]:focus {
   position: fixed;
   right: 20px;
   top: 20px;
-  zindex: 99;
+  z-index: 99;
 }
 
 .react-logo {
@@ -65,4 +73,53 @@ input[type]:focus {
 .mapboxgl-popup-content h4 {
   font-weight: bold;
   font-size: 20px;
+}
+
+.loading {
+  animation: rotation 8s infinite linear;
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .my-location-btn {
+    bottom: 35px;
+    left: 8px;
+    top: inherit;
+  }
+
+  .search-container {
+    left: 8px;
+    width: calc(100% - 16px);
+  }
+
+  .search-container-results {
+    height: 130px;
+  }
+
+  .search-container-results .list-group-item h6 {
+    font-size: 0.9rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .search-container-results .list-group-item p {
+    margin-bottom: 0.5rem;
+  }
+
+  .search-container-results .list-group-item button {
+    font-size: 11px;
+  }
+
+  .react-logo {
+    bottom: 33px;
+    right: 0px;
+    width: 60px;
+  }
 }

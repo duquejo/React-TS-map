@@ -37,7 +37,7 @@ export const SearchResults = () => {
     }
 
     return (
-        <ul className="search-container-results list-group p-1 bg-white">
+        <ul className="search-container-results list-group p-1 bg-white animate__animated animate__fadeIn">
             {
                 places.map( place => (
                     <li key={ place.id } 

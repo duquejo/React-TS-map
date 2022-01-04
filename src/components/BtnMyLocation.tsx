@@ -5,7 +5,7 @@ import { PlacesContext } from '../context/places/PlacesContext';
 export const BtnMyLocation = () => {
 
     const { map, isMapReady } = useContext(MapContext);
-    const { userLocation } = useContext(PlacesContext);
+    const { userLocation, isLoading } = useContext(PlacesContext);
 
     const onClick = () => {
 
@@ -21,15 +21,20 @@ export const BtnMyLocation = () => {
          * Fly to mapbox
          */
         map?.flyTo({
-            zoom: 14,
+            zoom: 16,
             center: userLocation
         });
     };
 
+    if( isLoading ) {
+        return <></>;
+    }    
+
     return (
-        <button className="btn btn-dark my-location-btn" 
+        <button className="btn btn-dark my-location-btn animate__animated animate__fadeInRight animate__delay-1s"
                 onClick={ onClick }>
-            My location
+            <span className="d-none d-md-block">Go to my location</span>
+            <span className="d-block d-md-none">Go back</span>
         </button>
     )
 }

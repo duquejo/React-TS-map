@@ -32,7 +32,6 @@ export const MapView = () => {
     }
 
     return (
-        <div ref={ mapDiv } className="map-container">
-        </div>
+        <div ref={ mapDiv } className="map-container"></div>
     )
 }

@@ -1,6 +1,6 @@
 /* eslint import/no-webpack-loader-syntax: off */
 
-import { AnySourceData } from 'mapbox-gl';
+import { AnySourceData, PopupOptions } from 'mapbox-gl';
 // @ts-ignore
 import { LngLatBounds, Map, Marker, Popup } from '!mapbox-gl';
 import { IDirectionsResponse } from '../../interfaces/directions';
@@ -42,13 +42,16 @@ export const MapProvider = ({ children }: IMapProviderProps) => {
 
         // Definitions
         const newMarkers: Marker[] = [];
+        const options: PopupOptions = {
+            className: 'animate__animated animate__fadeIn animate__faster'
+        };
 
         state.markers.forEach( marker => marker.remove() );
         for (const place of places) {
 
             const [ lng, lat ] = place.center;
 
-            const popup = new Popup()
+            const popup = new Popup(options)
             .setHTML(`
                 <h6>${ place.text }</h6>
                 <p>${ place.place_name }</p>
@@ -77,7 +80,6 @@ export const MapProvider = ({ children }: IMapProviderProps) => {
     const setMap = async ( map: Map ) => {
 
         let popUpContent = `<h4>I'm here!</h4><p>Somehere around the world!</p>`;
-
         const myLocation: Feature[] = await searchPlaceByCoords( userLocation );
         if( myLocation.length > 0 ) {
             popUpContent = `<h4>Hello there!</h4><p><strong>My current location: </strong>${ myLocation[0].place_name }.</p>`;

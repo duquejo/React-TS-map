@@ -4,7 +4,7 @@ import { MapContext, PlacesContext } from '../context';
 
 export const SearchBar = () => {
 
-    const { searchPlacesByTerm } = useContext(PlacesContext);
+    const { searchPlacesByTerm, isLoading } = useContext(PlacesContext);
     const { clearPolylines } = useContext(MapContext);
 
     /**
@@ -25,9 +25,13 @@ export const SearchBar = () => {
             clearPolylines();
         }, 350 );
     };
+
+    if( isLoading ) {
+        return <></>;
+    }
     
     return (
-        <div className="search-container">
+        <div className="search-container animate__animated animate__fadeInLeft animate__delay-1s">
             <input type="text"
                    className="form-control"
                    placeholder="Search a place..."
