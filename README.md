@@ -1,6 +1,7 @@
 # TS React MapBox
 
 React Mapbox Library implementation, It's built purely with React + TypeScript using Context for the global definitions.
+
 _Demo site:_ <a href="https://duquejo01.github.io/React-TS-map/" target="blank">React TS Map Live Demo</a>
 
 <p align="center">
