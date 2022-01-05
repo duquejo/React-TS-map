@@ -1,6 +1,6 @@
-import { useContext } from "react";
-import { MapContext } from "../context";
+import { MapContext } from '../context';
 import { PlacesContext } from '../context/places/PlacesContext';
+import { useContext } from 'react';
 
 export const BtnMyLocation = () => {
 
@@ -36,5 +36,5 @@ export const BtnMyLocation = () => {
             <span className="d-none d-md-block">Go to my location</span>
             <span className="d-block d-md-none">Go back</span>
         </button>
-    )
-}
+    );
+};

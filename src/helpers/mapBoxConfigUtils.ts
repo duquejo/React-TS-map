@@ -1,6 +1,4 @@
-/* eslint import/no-webpack-loader-syntax: off */
-
-// @ts-ignore
+// @ts-ignore: Babel compilation issue
 import { AnySourceData } from '!mapbox-gl';
 
 const setSourceData = ( coordsArray: number[][] ): AnySourceData => {

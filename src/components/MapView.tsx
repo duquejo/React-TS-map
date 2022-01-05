@@ -1,10 +1,8 @@
-/* eslint import/no-webpack-loader-syntax: off */
-
-import { Loading } from '.';
-import { PlacesContext, MapContext } from '../context';
-// @ts-ignore
-import { Map } from '!mapbox-gl';
+import { MapContext, PlacesContext } from '../context';
 import { useContext, useLayoutEffect, useRef } from 'react';
+import { Loading } from '.';
+// @ts-ignore: Babel compilation issue
+import { Map } from '!mapbox-gl';
 
 export const MapView = () => {
 
@@ -19,7 +17,7 @@ export const MapView = () => {
     useLayoutEffect(() => {
         if( ! isLoading ) {
             setMap( new Map({
-                container: mapDiv.current!, // container ID
+                container: mapDiv.current, // container ID
                 style: 'mapbox://styles/mapbox/streets-v11', // style URL
                 center: userLocation, // starting position [lng, lat]
                 zoom: 14 // starting zoom
@@ -33,5 +31,5 @@ export const MapView = () => {
 
     return (
         <div ref={ mapDiv } className="map-container"></div>
-    )
-}
+    );
+};

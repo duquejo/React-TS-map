@@ -19,4 +19,4 @@ export const getUserLocation = async (): Promise<[ number, number ]> => {
             options
         );
     }
-)};
+);};

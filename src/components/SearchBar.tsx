@@ -1,6 +1,6 @@
-import { ChangeEvent, useContext, useRef } from "react"
-import { SearchResults } from ".";
+import { ChangeEvent, useContext, useRef } from 'react';
 import { MapContext, PlacesContext } from '../context';
+import { SearchResults } from '.';
 
 export const SearchBar = () => {
 
@@ -38,5 +38,5 @@ export const SearchBar = () => {
                    onChange={ onQueryChange } />
             <SearchResults />
         </div>
-    )
-}
+    );
+};

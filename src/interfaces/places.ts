@@ -36,7 +36,7 @@ export interface Context {
 }
 
 export enum Language {
-    En = "en",
+    En = 'en',
 }
 
 export interface Geometry {

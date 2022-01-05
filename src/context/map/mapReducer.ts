@@ -1,6 +1,4 @@
-/* eslint import/no-webpack-loader-syntax: off */
-
-// @ts-ignore
+// @ts-ignore: Babel compilation issue
 import { Map, Marker } from '!mapbox-gl';
 import { IMapState } from './MapProvider';
 
@@ -24,4 +22,4 @@ export const mapReducer = ( state: IMapState, action: MapAction ): IMapState => 
         default:
             return state;
     }
-}
+};

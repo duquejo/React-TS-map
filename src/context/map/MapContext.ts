@@ -1,6 +1,4 @@
-/* eslint import/no-webpack-loader-syntax: off */
-
-// @ts-ignore
+// @ts-ignore: Babel compilation issue
 import { Map } from '!mapbox-gl';
 import { createContext } from 'react';
 

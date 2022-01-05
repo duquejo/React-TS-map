@@ -1,5 +1,5 @@
-import { IPlacesState } from './PlacesProvider';
 import { Feature } from '../../interfaces/places';
+import { IPlacesState } from './PlacesProvider';
 
 type PlacesAction = 
     | { type: 'setUserLocation', payload: [ number, number ] } // Longitude / Latitude
@@ -25,7 +25,7 @@ export const placesReducer = ( state: IPlacesState, action: PlacesAction ): IPla
             return {
                 ...state,
                 activePlace: action.payload
-            }
+            };
         case 'setPlaces':
             return {
                 ...state,

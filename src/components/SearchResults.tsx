@@ -1,7 +1,7 @@
-import { useContext } from 'react';
-import { PlacesContext, MapContext } from '../context';
-import { LoadingPlaces } from './';
+import { MapContext, PlacesContext } from '../context';
 import { Feature } from '../interfaces/places';
+import { LoadingPlaces } from './';
+import { useContext } from 'react';
 
 export const SearchResults = () => {
 
@@ -55,5 +55,5 @@ export const SearchResults = () => {
                 ))
             }
         </ul>
-    )
-}
+    );
+};

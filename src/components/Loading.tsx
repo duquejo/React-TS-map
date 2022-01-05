@@ -1,4 +1,4 @@
-import { ReactLogo } from ".";
+import { ReactLogo } from '.';
 import { reactLogoClassNames } from '../helpers';
 
 export const Loading = () => {
@@ -10,5 +10,5 @@ export const Loading = () => {
                 <span>Getting current location...</span>
             </div>
         </div>
-    )
-}
+    );
+};

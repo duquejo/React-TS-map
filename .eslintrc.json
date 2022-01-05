@@ -1,0 +1,47 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 13,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "no-var": "error",
+        "no-unused-vars": "off",
+        "quotes": ["error", "single"],
+        "semi": ["error", "always"],
+        "prefer-arrow-callback": "error",
+        "prefer-const": "error",
+        "no-debugger": "error",
+        "no-with": "error",
+        "sort-imports": "error",
+        "react/react-in-jsx-scope": "off",
+        "@typescript-eslint/ban-ts-comment": [
+            "error",
+            {
+                "ts-ignore": "allow-with-description"
+            }
+        ]
+    },
+    "settings": {
+        "react": {
+            "pragma": "React",  // Pragma to use, default to "React"
+            "version": "detect" // React version.
+        }
+    }
+}

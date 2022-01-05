@@ -1,4 +1,4 @@
-import { Marker } from "mapbox-gl";
+import { Marker } from 'mapbox-gl';
 import { constantsName } from './constants.enum';
 
 /**

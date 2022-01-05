@@ -22,11 +22,11 @@ export interface Geometry {
 }
 
 export interface Leg {
-    via_waypoints: any[];
+    via_waypoints: [];
     admins:        Admin[];
     weight:        number;
     duration:      number;
-    steps:         any[];
+    steps:         [];
     distance:      number;
     summary:       string;
 }

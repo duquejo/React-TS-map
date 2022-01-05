@@ -1,8 +1,8 @@
 import { Feature, IPlacesResponse } from '../../interfaces/places';
+import { useEffect, useReducer } from 'react';
 import { PlacesContext } from './PlacesContext';
 import { getUserLocation } from '../../helpers';
 import { placesReducer } from './placesReducer';
-import { useEffect, useReducer } from 'react';
 import { searchApi } from '../../apis';
 
 export interface IPlacesState {
@@ -47,7 +47,7 @@ export const PlacesProvider = ({ children }: PlacesProviderProps ) => {
             }
         } );
         return response.data.features;
-    }
+    };
 
     const searchPlacesByTerm = async ( query: string ): Promise<Feature[]> => {
         if( query.length === 0 ) {
@@ -92,5 +92,5 @@ export const PlacesProvider = ({ children }: PlacesProviderProps ) => {
         }}>
             { children }
         </PlacesContext.Provider>
-    )
-}
+    );
+};

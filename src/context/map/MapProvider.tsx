@@ -1,16 +1,13 @@
-/* eslint import/no-webpack-loader-syntax: off */
-
-import { AnySourceData, PopupOptions } from 'mapbox-gl';
-// @ts-ignore
-import { LngLatBounds, Map, Marker, Popup } from '!mapbox-gl';
+// @ts-ignore: Babel compilation issue
+import { AnySourceData, LngLatBounds, Map, Marker, Popup, PopupOptions } from '!mapbox-gl';
+import { constantsName, setActiveMarkerConfig, setLayerData, setSourceData } from '../../helpers';
+import { useContext, useEffect, useReducer, useRef } from 'react';
+import { Feature } from '../../interfaces/places';
 import { IDirectionsResponse } from '../../interfaces/directions';
 import { MapContext } from './MapContext';
 import { PlacesContext } from '../';
 import { directionsApi } from '../../apis';
 import { mapReducer } from './mapReducer';
-import { useReducer, useContext, useEffect, useRef } from 'react';
-import { constantsName, setSourceData, setLayerData, setActiveMarkerConfig } from '../../helpers';
-import { Feature } from '../../interfaces/places';
 
 export interface IMapState {
     isMapReady: boolean;
@@ -60,7 +57,7 @@ export const MapProvider = ({ children }: IMapProviderProps) => {
             const newMarker = new Marker()
             .setPopup( popup )
             .setLngLat( [ lng, lat ])
-            .addTo( state.map! );
+            .addTo( state.map );
             newMarkers.push( newMarker );
         }
         return newMarkers;
@@ -79,7 +76,7 @@ export const MapProvider = ({ children }: IMapProviderProps) => {
 
     const setMap = async ( map: Map ) => {
 
-        let popUpContent = `<h4>I'm here!</h4><p>Somehere around the world!</p>`;
+        let popUpContent = '<h4>I\'m here!</h4><p>Somehere around the world!</p>';
         const myLocation: Feature[] = await searchPlaceByCoords( userLocation );
         if( myLocation.length > 0 ) {
             popUpContent = `<h4>Hello there!</h4><p><strong>My current location: </strong>${ myLocation[0].place_name }.</p>`;
@@ -107,7 +104,7 @@ export const MapProvider = ({ children }: IMapProviderProps) => {
             state.map.removeLayer( constantsName.SOURCE_DATA_ID );
             state.map.removeSource( constantsName.SOURCE_DATA_ID );
         }
-    }
+    };
 
     /**
      * Get Route between points
@@ -120,7 +117,7 @@ export const MapProvider = ({ children }: IMapProviderProps) => {
          */
         const response = await directionsApi.get<IDirectionsResponse>(`/${ start.join(',') };${ end.join(',') }`);
         
-        const { geometry } = response.data.routes[0];
+        const { geometry } = response.data.routes[0] || {};
         const { coordinates } = geometry;
 
         const bounds = new LngLatBounds( start, start );
@@ -164,5 +161,5 @@ export const MapProvider = ({ children }: IMapProviderProps) => {
             }}>
             { children }
         </MapContext.Provider>
-    )
-}
+    );
+};
